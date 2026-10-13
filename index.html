@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ScamShield - a rule-based demo that checks suspicious messages for common scam warning signs.">
+  <title>ScamShield – Suspicious Message Checker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation bar -->
+  <header class="navbar">
+    <a href="#home" class="brand" aria-label="ScamShield home">
+      <svg class="logo" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.3 8 11 4.6-1.7 8-6 8-11V5l-8-3Z" fill="url(#g)"/><path d="m8.5 12 2.5 2.5 4.5-5" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#8b5cf6"/><stop offset="1" stop-color="#38bdf8"/></linearGradient></defs></svg>
+      <span>ScamShield</span>
+    </a>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#home">Home</a>
+      <a href="#how">How It Works</a>
+      <a href="#about">About</a>
+    </nav>
+  </header>
+
+  <main id="home">
+
+    <!-- Hero + analyzer -->
+    <section class="hero">
+      <p class="pill">Rule-based demo • Runs 100% in your browser</p>
+      <h1>Think Before You Click.</h1>
+      <p class="lead">Paste an SMS, WhatsApp message, email or any text below. ScamShield looks for common scam warning signs and gives you an estimated risk level with simple safety advice.</p>
+
+      <div class="card analyzer">
+        <label for="messageInput" class="field-label">Message to check</label>
+        <textarea id="messageInput" maxlength="3000" rows="7" placeholder="Paste the suspicious message here..."></textarea>
+        <div class="meta-row">
+          <span id="errorMsg" class="error" role="alert"></span>
+          <span id="charCount" class="counter">0 / 3000</span>
+        </div>
+
+        <div class="actions">
+          <button id="analyzeBtn" class="btn primary" type="button">🔍 Analyze Message</button>
+          <button id="clearBtn" class="btn ghost" type="button">Clear</button>
+        </div>
+
+        <div class="samples">
+          <span class="samples-label">Try an example:</span>
+          <button class="btn chip" type="button" data-sample="suspicious">Suspicious prize</button>
+          <button class="btn chip" type="button" data-sample="normal">Normal message</button>
+          <button class="btn chip" type="button" data-sample="bank">Urgent bank alert</button>
+        </div>
+
+        <p class="note">⚠️ This is a rule-based demo, not a guaranteed scam detector and not an AI model. Your message never leaves your device.</p>
+      </div>
+
+      <!-- Scanning animation -->
+      <div id="scanner" class="scanner" hidden aria-live="polite">
+        <div class="scan-bar"></div>
+        <p>Scanning message for warning signs…</p>
+      </div>
+
+      <!-- Results dashboard -->
+      <section id="results" class="card results" hidden aria-live="polite">
+        <h2>Analysis Results</h2>
+        <div class="result-top">
+          <div class="score-box">
+            <div class="score-circle" id="scoreCircle">
+              <span id="scoreNumber">0</span><small>/100</small>
+            </div>
+            <p class="tiny">Heuristic estimate</p>
+          </div>
+          <div class="summary-box">
+            <span id="riskBadge" class="badge">Low Risk</span>
+            <div class="meter" aria-hidden="true"><div id="meterFill" class="meter-fill"></div></div>
+            <p id="riskSummary"></p>
+          </div>
+        </div>
+
+        <h3>Detected warning signs</h3>
+        <ul id="signsList" class="signs"></ul>
+
+        <h3>Recommended actions</h3>
+        <ul id="recList" class="recs"></ul>
+
+        <p class="note">This result is an estimate based only on visible text patterns. It cannot confirm whether a message is genuine or fraudulent.</p>
+
+        <div class="actions">
+          <button id="copyBtn" class="btn secondary" type="button">📋 Copy Results</button>
+          <button id="downloadBtn" class="btn secondary" type="button">⬇️ Download Report</button>
+          <button id="againBtn" class="btn ghost" type="button">Try Another Message</button>
+        </div>
+        <p id="statusMsg" class="status" role="status"></p>
+      </section>
+    </section>
+
+    <!-- How it works -->
+    <section id="how" class="section">
+      <h2>How It Works</h2>
+      <div class="grid three">
+        <article class="card"><span class="step">1</span><h3>Paste</h3><p>Enter any suspicious text. Nothing is uploaded, stored or sent anywhere.</p></article>
+        <article class="card"><span class="step">2</span><h3>Match rules</h3><p>Regular-expression rules look for patterns such as urgency, OTP requests, short links and fee demands.</p></article>
+        <article class="card"><span class="step">3</span><h3>Score</h3><p>Each rule has a weight. Related rules are grouped so repeated words don't inflate the score. Under 30 is Low, 30–59 Medium, 60+ High.</p></article>
+      </div>
+    </section>
+
+    <!-- Safety tips -->
+    <section id="tips" class="section">
+      <h2>Safety Tips</h2>
+      <div class="grid four">
+        <article class="card"><h3>🔐 Guard your OTP</h3><p>Banks never ask you to share OTPs, PINs or passwords.</p></article>
+        <article class="card"><h3>🔗 Inspect links</h3><p>Avoid shortened or odd-looking links. Type the official website yourself.</p></article>
+        <article class="card"><h3>⏳ Slow down</h3><p>Scammers create panic. Pause and verify through an official number.</p></article>
+        <article class="card"><h3>🚫 No fees for prizes</h3><p>Real rewards never require you to pay a fee first.</p></article>
+      </div>
+    </section>
+
+    <!-- About and limitations -->
+    <section id="about" class="section">
+      <h2>About &amp; Limitations</h2>
+      <div class="card about">
+        <p><strong>ScamShield</strong> is a first-year B.Tech CSE college demo built with HTML, CSS and vanilla JavaScript. It uses a transparent, rule-based scoring system, not machine learning or artificial intelligence.</p>
+        <ul>
+          <li>A scam can score Low if it uses unusual wording or other languages.</li>
+          <li>A genuine message can score higher if it contains words like "bank" or "OTP".</li>
+          <li>A Low score never means a message is safe. Always verify with the official source.</li>
+          <li>It does not check whether a link is actually malicious.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p><strong>ScamShield – Suspicious Message Checker</strong></p>
+    <p>Demo project for educational use only. Results are heuristic estimates, not professional security advice.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
